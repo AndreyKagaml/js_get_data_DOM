@@ -6,7 +6,7 @@ const numbersSpan = [...document.querySelectorAll('.population')];
 if (!checkIsEmpty(numbersSpan)) {
   const numbers = numbersSpan
     .map((i) => parseInt(i.innerText.replaceAll(',', ''), 10))
-    .filter((i) => i);
+    .filter((i) => Number.isFinite(i));
 
   if (!checkIsEmpty(numbers)) {
     const sum = numbers.reduce((prev, item) => prev + item, 0);
@@ -19,7 +19,7 @@ if (!checkIsEmpty(numbersSpan)) {
       total.innerText = toStringWithSeparator(sum);
     }
 
-    if (total) {
+    if (average) {
       average.innerText = toStringWithSeparator(avg);
     }
   }
@@ -30,7 +30,7 @@ function toStringWithSeparator(number) {
 }
 
 function checkIsEmpty(array) {
-  if (array === null) {
+  if (array === null || array === undefined) {
     return true;
   }
 
