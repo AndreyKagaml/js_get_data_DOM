@@ -3,18 +3,23 @@
 const numbersSpan = [...document.querySelectorAll('.population')];
 
 /* eslint-disable function-paren-newline */
-const numbers = numbersSpan.map((i) =>
-  parseInt(i.innerText.replaceAll(',', '')),
-);
+if (!checkIsEmpty(numbersSpan)) {
 
-const sum = numbers.reduce((prev, item) => prev + item, 0);
-const avg = Math.round(sum / numbers.length);
+  const numbers = numbersSpan
+    .map((i) => parseInt(i.innerText.replaceAll(',', ''), 10))
+    .filter(i => i);
 
-const total = document.querySelector('.total-population');
-const average = document.querySelector('.average-population');
+  if (!checkIsEmpty(numbers)) {
+    const sum = numbers.reduce((prev, item) => prev + item, 0);
+    const avg = Math.round(sum / numbers.length);
 
-total.innerText = toStringWithSeparator(sum);
-average.innerText = toStringWithSeparator(avg);
+    const total = document.querySelector('.total-population');
+    const average = document.querySelector('.average-population');
+
+    if (total) total.innerText = toStringWithSeparator(sum);
+    if (total) average.innerText = toStringWithSeparator(avg);
+  }
+}
 
 function toStringWithSeparator(number) {
   const numberOfString = number.toString().split('');
@@ -30,4 +35,12 @@ function toStringWithSeparator(number) {
   }
 
   return numberOfString.join('');
+}
+
+function checkIsEmpty(array){
+  if (array === null){
+    return true;
+  }
+
+  return array.length === 0;
 }
